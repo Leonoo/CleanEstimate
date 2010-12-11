@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/mainwindow.ui'
 #
-# Created: Sat Dec 11 20:31:40 2010
+# Created: Sat Dec 11 23:50:53 2010
 #      by: PySide uic UI code generator
 #
 # WARNING! All changes made in this file will be lost!
@@ -21,6 +21,10 @@ class Ui_MainWindow(object):
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1020, 20))
         self.menubar.setObjectName("menubar")
+        self.menuDatei = QtGui.QMenu(self.menubar)
+        self.menuDatei.setObjectName("menuDatei")
+        self.menuEdit = QtGui.QMenu(self.menubar)
+        self.menuEdit.setObjectName("menuEdit")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -35,6 +39,14 @@ class Ui_MainWindow(object):
         self.actionObject = QtGui.QAction(MainWindow)
         self.actionObject.setVisible(False)
         self.actionObject.setObjectName("actionObject")
+        self.actionIdentifiers = QtGui.QAction(MainWindow)
+        self.actionIdentifiers.setObjectName("actionIdentifiers")
+        self.actionCoatings = QtGui.QAction(MainWindow)
+        self.actionCoatings.setObjectName("actionCoatings")
+        self.menuEdit.addAction(self.actionIdentifiers)
+        self.menuEdit.addAction(self.actionCoatings)
+        self.menubar.addAction(self.menuDatei.menuAction())
+        self.menubar.addAction(self.menuEdit.menuAction())
         self.toolBar.addAction(self.actionCompany)
         self.toolBar.addAction(self.actionObject)
 
@@ -43,9 +55,13 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "CleanEstimate", None, QtGui.QApplication.UnicodeUTF8))
+        self.menuDatei.setTitle(QtGui.QApplication.translate("MainWindow", "Datei", None, QtGui.QApplication.UnicodeUTF8))
+        self.menuEdit.setTitle(QtGui.QApplication.translate("MainWindow", "Edit", None, QtGui.QApplication.UnicodeUTF8))
         self.toolBar.setWindowTitle(QtGui.QApplication.translate("MainWindow", "toolBar", None, QtGui.QApplication.UnicodeUTF8))
         self.actionCompany.setText(QtGui.QApplication.translate("MainWindow", "Company", None, QtGui.QApplication.UnicodeUTF8))
         self.actionObject.setText(QtGui.QApplication.translate("MainWindow", "Object", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionIdentifiers.setText(QtGui.QApplication.translate("MainWindow", "Identifiers", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionCoatings.setText(QtGui.QApplication.translate("MainWindow", "Coatings", None, QtGui.QApplication.UnicodeUTF8))
 
 
 if __name__ == "__main__":

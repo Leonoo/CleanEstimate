@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/companywidget.ui'
 #
-# Created: Sat Dec 11 20:31:40 2010
+# Created: Sat Dec 11 23:50:53 2010
 #      by: PySide uic UI code generator
 #
 # WARNING! All changes made in this file will be lost!

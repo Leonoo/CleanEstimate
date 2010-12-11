@@ -8,7 +8,6 @@ from companywidget_ui import Ui_CompanyWidget
 
 class CompanyWidget(QtGui.QWidget):
     gotoObject = QtCore.Signal(int)
-    speak = QtCore.Signal((int,), (str,))
     
     def __init__(self, parent=None):
         super(CompanyWidget, self).__init__(parent)

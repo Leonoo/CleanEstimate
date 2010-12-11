@@ -25,6 +25,20 @@
      <height>20</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuDatei">
+    <property name="title">
+     <string>Datei</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionIdentifiers"/>
+    <addaction name="actionCoatings"/>
+   </widget>
+   <addaction name="menuDatei"/>
+   <addaction name="menuEdit"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -57,6 +71,16 @@
    </property>
    <property name="visible">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionIdentifiers">
+   <property name="text">
+    <string>Identifiers</string>
+   </property>
+  </action>
+  <action name="actionCoatings">
+   <property name="text">
+    <string>Coatings</string>
    </property>
   </action>
  </widget>

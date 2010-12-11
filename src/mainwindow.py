@@ -5,8 +5,11 @@ import sys
 from PySide import QtCore, QtGui, QtSql
 
 from mainwindow_ui import Ui_MainWindow
+
 from companywidget import CompanyWidget
 from objectwidget import ObjectWidget
+from calculationwidget import CalculationWidget
+from addwidget import AddWidget
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self, parent=None):
@@ -24,6 +27,10 @@ class MainWindow(QtGui.QMainWindow):
         self.createModel()
 
         self.__ui.actionCompany.triggered.connect(self.actionCompany_triggered)      
+
+        self.__ui.actionIdentifiers.triggered.connect(self.actionIdentifiers_triggered)
+        self.__ui.actionCoatings.triggered.connect(self.actionCoatings_triggered)
+        
 
         self.showCompany()
 
@@ -69,18 +76,18 @@ class MainWindow(QtGui.QMainWindow):
 
         ok = query.exec_(u"CREATE TABLE IF NOT EXISTS Kalkulation(Id INTEGER primary key AUTOINCREMENT,"
         u"ObjektID INTEGER NOT NULL,"
-        u"Etage varchar(255) NOT NULL,"
-        u"BezeichnungID INTEGER NOT NULL,"
+        u"Etage varchar(255),"
+        u"BezeichnungID INTEGER,"
         u"BelaegeID INTEGER,"
         u"MethodeID INTEGER,"
         u"Einheit varchar(255),"
         u"Anzahl INTEGER,"
         u"Richtleistung INTEGER,"
-        u"HaeufigkeitID INTEGER NOT NULL,"
+        u"HaeufigkeitID INTEGER,"
         u"Flaeche double,"
         u"AusfuehrungszeitT double,"
         u"AusfuehrungszeitM double,"
-        u"PreisM double NOT NULL,"
+        u"PreisM double,"
         u"Mietpreis double"
         u")"
         u";")
@@ -134,7 +141,8 @@ class MainWindow(QtGui.QMainWindow):
         self.setCentralWidget(self.__newWidget)
 
     def showObject(self, row):
-        customerID = self.__model.record(row).value(0)
+        record = self.__model.record(row)
+        customerID = record.value(0)
         
         model = QtSql.QSqlRelationalTableModel() 
         model.setTable("Object")
@@ -142,8 +150,11 @@ class MainWindow(QtGui.QMainWindow):
         fil = "KundenID = " + str(customerID)
         print(fil)
         model.setFilter(fil)
+
+        model.select()
         
         self.__objectWidget = ObjectWidget(customerID, self)
+        self.__objectWidget.gotoCalculation.connect(self.showCalculation)
         self.__ui.actionCompany.setVisible(True)
         self.setCentralWidget(self.__objectWidget)
         self.__objectWidget.setModel(model)
@@ -151,12 +162,69 @@ class MainWindow(QtGui.QMainWindow):
         print(row)
         print(customerID)
 
+    def showCalculation(self, row):
+        record = self.__objectModel.record(row)
+        objectID = record.value(0)
+
+        model = QtSql.QSqlRelationalTableModel()
+        model.setTable("Kalkulation")
+        model.setEditStrategy(QtSql.QSqlRelationalTableModel.OnRowChange)
+        fil = "ObjektID = " + str(objectID)
+        print(fil)
+        model.setFilter(fil)
+
+        relBezeichnung = QtSql.QSqlRelation(u"Bezeichnung", u"Id", u"Name")
+        relBelaege = QtSql.QSqlRelation(u"Belaege", u"Id", u"Name")
+        relMethode = QtSql.QSqlRelation(u"Methode", u"Id", u"Name")
+        relHaeufigkeit = QtSql.QSqlRelation(u"Haeufigkeit", u"Id", u"Name")
+
+        model.setRelation(model.fieldIndex(u"BezeichnungID"), relBezeichnung);
+        model.setRelation(model.fieldIndex(u"BelaegeID"), relBelaege);
+        model.setRelation(model.fieldIndex(u"MethodeID"), relMethode);
+        model.setRelation(model.fieldIndex(u"HaeufigkeitID"), relHaeufigkeit);
+
+        model.select()
+
+        self.__calculationWidget = CalculationWidget(objectID)
+        self.__ui.actionObject.setVisible(True)
+        self.setCentralWidget(self.__calculationWidget)
+        self.__calculationWidget.setModel(model)
+
+        self.__calculationWidget.HourlyRate = record.value(8)
+        self.__calculationWidget.Workdays = record.value(9)
+        
+        self.__calculationModel = model
+
     def actionCompany_triggered(self):
         self.__ui.actionCompany.setVisible(False)
         self.__objectWidget = None
         self.__objectModel = None
         
         self.showCompany()
+
+    def actionIdentifiers_triggered(self):
+        model = QtSql.QSqlTableModel()
+        model.setTable(u"Bezeichnung")
+        model.setEditStrategy(QtSql.QSqlRelationalTableModel.OnRowChange)
+        model.setHeaderData(1, QtCore.Qt.Horizontal, self.tr("Identifiers"))
+        
+        model.select()
+        
+        addWidget = AddWidget("Identifiers", self)
+        addWidget.setModel(model)
+        addWidget.exec_()
+        
+    def actionCoatings_triggered(self):
+        model = QtSql.QSqlTableModel()
+        model.setTable(u"Belaege")
+        model.setEditStrategy(QtSql.QSqlRelationalTableModel.OnRowChange)
+        model.setHeaderData(1, QtCore.Qt.Horizontal, self.tr("Coatings"))
+
+        model.select()
+
+        addWidget = AddWidget("Coatings", self)
+        addWidget.setModel(model)
+        addWidget.exec_()
     
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

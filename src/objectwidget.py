@@ -7,6 +7,8 @@ from PySide import QtCore, QtGui, QtSql
 from objectwidget_ui import Ui_ObjectWidget
 
 class ObjectWidget(QtGui.QWidget):
+    gotoCalculation = QtCore.Signal(int)
+    
     def __init__(self, customerID, parent=None):
         super(ObjectWidget, self).__init__(parent)
 
@@ -21,7 +23,7 @@ class ObjectWidget(QtGui.QWidget):
 
         self.__ui.pb_Apply.clicked.connect(self.pb_Apply_clicked)
         self.__ui.pb_New.clicked.connect(self.pb_New_clicked)
-        #self.__ui.pb_Calculation.clicked.connect(self.pb_Objects_clicked)
+        self.__ui.pb_Calculation.clicked.connect(self.pb_Calculation_clicked)
 
         self.__mapper = QtGui.QDataWidgetMapper(self)
         self.__mapper.setSubmitPolicy(QtGui.QDataWidgetMapper.ManualSubmit)
@@ -100,6 +102,10 @@ class ObjectWidget(QtGui.QWidget):
             self.__model.insertRecord(-1, record)
             self.__mapper.setCurrentIndex(self.__model.rowCount() - 1)
             self.__ui.tableView.selectRow(self.__model.rowCount() - 1)
+
+    def pb_Calculation_clicked(self):
+        print(self.__mapper.currentIndex())
+        self.gotoCalculation.emit(self.__mapper.currentIndex())
 
     def clicked(self, index):
         print(index)
