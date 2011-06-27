@@ -72,8 +72,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Daten\Haeufigkeit.cs" />
     <Compile Include="Daten\Leistung.cs" />
     <Compile Include="Daten\Objekt.cs" />
+    <Compile Include="Daten\Settings.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModel\LeistungViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

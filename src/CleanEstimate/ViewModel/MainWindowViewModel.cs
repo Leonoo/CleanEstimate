@@ -26,6 +26,8 @@ namespace CleanEstimate.ViewModel
         private string m_FilePath = string.Empty;
         private bool m_IsEdited = false;
 
+        private Daten.Settings m_Settings = new Daten.Settings();
+
         private ObservableCollection<LeistungViewModel> m_Leistungen = null;
         private ViewModel.ObjektViewModel m_Objekt = new ObjektViewModel();
         #endregion //Fields
@@ -68,6 +70,18 @@ namespace CleanEstimate.ViewModel
                     return DisplayName + "*";
 
                 return DisplayName;
+            }
+        }
+
+        public Daten.Settings Settings
+        {
+            get
+            {
+                return m_Settings;
+            }
+            set
+            {
+                m_Settings = value;
             }
         }
 
@@ -303,6 +317,56 @@ namespace CleanEstimate.ViewModel
             }
         }
 
+        private void LoadSettings()
+        {
+            string directoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CleanEstimate");
+            string filePath = Path.Combine(directoryPath, "CleanEstimate.xml");
+
+            if (!Directory.Exists(directoryPath))
+                Directory.CreateDirectory(directoryPath);
+
+            if (File.Exists(filePath))
+            {
+                using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    Settings.Load(fs);
+                }
+            }
+            else
+            {
+                Settings.Methoden.Add("Wischen");
+                Settings.Methoden.Add("Saugen");
+                Settings.Arten.Add("Textil");
+                Settings.Haeufigkeiten.Add(new Daten.Haeufigkeit { Name = "5x Wöchentlich", Faktor = 5 });
+
+                using (FileStream fs = new FileStream(filePath, FileMode.CreateNew, FileAccess.Write))
+                {
+                    Settings.Save(fs);
+                }
+            }
+        }
+
+        private void SaveSettings()
+        {
+            string directoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CleanEstimate");
+            string newfilePath = Path.Combine(directoryPath, "CleanEstimate_new.xml");
+            string filePath = Path.Combine(directoryPath, "CleanEstimate.xml");
+
+            if (!Directory.Exists(directoryPath))
+                Directory.CreateDirectory(directoryPath);
+
+
+            using (FileStream fs = new FileStream(newfilePath, FileMode.CreateNew, FileAccess.Write))
+            {
+                Settings.Save(fs);
+            }
+
+            if (File.Exists(filePath))
+                File.Delete(filePath);
+
+            File.Move(newfilePath, filePath);
+        }
+
         private void Closed()
         {
             m_MainWindow = null;
@@ -320,6 +384,8 @@ namespace CleanEstimate.ViewModel
 
             Delegates.VoidDelegate del = new Delegates.VoidDelegate(() =>
             {
+                LoadSettings();
+
                 Leistungen = Objekt.Leistungen;
             });
 
