@@ -33,12 +33,13 @@ namespace CleanEstimate
             // When the ViewModel asks to be closed, 
             // close the window.
             EventHandler handler = null;
-            handler = delegate
+            handler = (sender, e2) => 
             {
                 viewModel.RequestClose -= handler;
                 window.Close();
             };
-            viewModel.RequestClose += handler;
+
+            viewModel.RequestClose += handler; 
 
             // Allow all controls in the window to 
             // bind to the ViewModel by setting the 

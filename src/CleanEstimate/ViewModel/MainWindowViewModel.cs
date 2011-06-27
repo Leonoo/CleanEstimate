@@ -16,13 +16,18 @@ namespace CleanEstimate.ViewModel
         #region Fields
         private MainWindow m_MainWindow = null;
 
-        private SqlConnection m_SQLConnection = null;
-        private DataSet m_DataSet = new DataSet();
-
-        private SqlDataAdapter m_sdaFirm = null;
-        //private SqlDataAdapter m_sdaObj = null;
-
         private RelayCommand m_CloseCommand;
+        private RelayCommand m_NewCommand;
+        private RelayCommand m_LoadCommand;
+        private RelayCommand m_SaveCommand;
+        private RelayCommand m_SaveAsCommand;
+        private RelayCommand m_DataGridDoubleClickCommand;
+
+        private string m_FilePath = string.Empty;
+        private bool m_IsEdited = false;
+
+        private ObservableCollection<LeistungViewModel> m_Leistungen = null;
+        private ViewModel.ObjektViewModel m_Objekt = new ObjektViewModel();
         #endregion //Fields
 
         #region Constructor
@@ -34,17 +39,168 @@ namespace CleanEstimate.ViewModel
 
         #endregion //Constructor
 
-        private object m_MyData = null;
-        public object MyData { get { return m_MyData; } set { m_MyData = value; OnPropertyChanged("MyData"); } }
+        public string FilePath { get { return m_FilePath; } 
+            set
+            { 
+                m_FilePath = value;
+                if (!String.IsNullOrEmpty(value))
+                {
+                    DisplayName = "CleanEstimate - " + Path.GetFileName(value);
+                }
+                else
+                {
+                    DisplayName = "CleanEstimate";
+                    OnPropertyChanged("EditDisplayName");
+                }
+            } 
+        }
+
+        public bool IsEdited { get { return m_IsEdited; } set { m_IsEdited = value; OnPropertyChanged("EditDisplayName"); } }
+
+        public string EditDisplayName
+        {
+            get
+            {
+                if (IsEdited)
+                    return DisplayName + "*";
+
+                return DisplayName;
+            }
+        }
+
+        public ObservableCollection<LeistungViewModel> Leistungen
+        {
+            get
+            {
+                return m_Leistungen;
+            }
+            set
+            {
+                if (m_Leistungen != value)
+                {
+                    m_Leistungen = value;
+                    OnPropertyChanged("Leistungen");
+                }
+            }
+        }
+
+        public ViewModel.ObjektViewModel Objekt { get { return m_Objekt; } set { m_Objekt = value; OnPropertyChanged("Objekt"); } }
 
         public ICommand CloseCommand
         {
             get
             {
                 if (m_CloseCommand == null)
-                    m_CloseCommand = new RelayCommand(parm => this.OnRequestClose());
+                    m_CloseCommand = new RelayCommand(parm => OnRequestClose());
 
                 return m_CloseCommand;
+            }
+        }
+
+        public ICommand NewCommand
+        {
+            get
+            {
+                if (m_NewCommand == null)
+                    m_NewCommand = new RelayCommand(parm =>
+                {
+                    Objekt = new ObjektViewModel();
+                    Leistungen = Objekt.Leistungen;
+                    FilePath = null;
+                    IsEdited = false;
+                });
+
+                return m_NewCommand;
+            }
+        }
+
+        public ICommand LoadCommand
+        {
+            get
+            {
+                if (m_LoadCommand == null)
+                    m_LoadCommand = new RelayCommand(parm =>
+                {
+                    Load();
+                    IsEdited = false;
+                });
+
+                return m_LoadCommand;
+            }
+        }
+
+        public ICommand SaveCommand
+        {
+            get
+            {
+                if (m_SaveCommand == null)
+                    m_SaveCommand = new RelayCommand(parm =>
+                {
+                    Save();
+                    IsEdited = false;
+                });
+
+                return m_SaveCommand;
+            }
+        }
+
+        public ICommand SaveAsCommand
+        {
+            get
+            {
+                if (m_SaveAsCommand == null)
+                    m_SaveAsCommand = new RelayCommand(parm =>
+                {
+                    SaveAs();
+                    IsEdited = false;
+                });
+
+                return m_SaveAsCommand;
+            }
+        }
+      
+        public ICommand DataGridDoubleClickCommand
+        {
+            get
+            {
+                if (m_DataGridDoubleClickCommand == null)
+                    m_DataGridDoubleClickCommand = new RelayCommand((item) =>
+                {
+                    if (item is LeistungViewModel)
+                    {
+                        LeistungViewModel viewModel = item as LeistungViewModel;
+                        LeistungViewModel tempViewModel = new LeistungViewModel();
+                        tempViewModel.Load(viewModel);
+
+                        View.LeistungView view = new View.LeistungView();
+                        view.DataContext = tempViewModel;
+
+                        bool? result = view.ShowDialog();
+
+                        if (result.HasValue && result.Value)
+                        {
+                            tempViewModel.Save(viewModel);
+                            IsEdited = true;
+                        }
+                    }
+                    else
+                    {
+                        LeistungViewModel viewModel = new LeistungViewModel();
+
+                        View.LeistungView view = new View.LeistungView();
+                        view.DataContext = viewModel;
+
+                        bool? result = view.ShowDialog();
+
+                        if (result.HasValue && result.Value)
+                        {
+                            Objekt.AddLeistung(viewModel);
+                            IsEdited = true;
+                        }
+                    }
+                });
+
+                return m_DataGridDoubleClickCommand;
             }
         }
 
@@ -59,133 +215,91 @@ namespace CleanEstimate.ViewModel
         }
         #endregion // RequestClose [event]
 
-        private void DBConnect()
+        private void Save()
         {
-            m_SQLConnection = new SqlConnection(@"Server=.\SQLEXPRESS;Trusted_Connection=true;");
-            m_SQLConnection.Open();
-
-            CreateDBNew();
-
-            UseDB();
-
-            CreateFirmTable();
-        }
-
-        public virtual bool DBExists()
-        {
-            /*bool exists = false;
-
-            try
+            if (String.IsNullOrEmpty(FilePath))
             {
-                SqlCommand cmd = m_SQLConnection.CreateCommand();
-                cmd.CommandText = "SELECT COUNT(name) FROM sys.databases WHERE name = @DBName";
-                cmd.Parameters.AddWithValue("@DBName", "Kalku");
-
-                exists = (Convert.ToInt32(cmd.ExecuteScalar()) == 1);
+                SaveAs();
             }
-            catch (Exception)
+            else
             {
+                using (FileStream fs = new FileStream(FilePath, FileMode.Create, FileAccess.Write))
+                {
+                    Daten.Objekt tempObjekt = new Daten.Objekt();
+                    Objekt.Save(tempObjekt);
 
-            }
-
-            return exists;*/
-            return false;
-        }
-
-        public void CreateDBNew()
-        {
-            string createDB = @"CREATE DATABASE Kalku";
-
-            try
-            {
-                SqlCommand cmd = m_SQLConnection.CreateCommand();
-                cmd.CommandText = createDB;
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
+                    tempObjekt.Save(fs);
+                }
             }
         }
 
-        public void UseDB()
+        private void SaveAs()
         {
-            string useDB = @"USE Kalku";
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.DefaultExt = ".cexml";
+            dlg.Filter = "CleanEstimate Datei |*.cexml";
 
-            try
+            bool? result = dlg.ShowDialog();
+
+            if (result.HasValue && result.Value)
             {
-                SqlCommand cmd = m_SQLConnection.CreateCommand();
-                cmd.CommandText = useDB;
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
+                FilePath = dlg.FileName;
+                Save();
             }
         }
 
-        private void CreateFirmTable()
+        private void Load()
         {
-            string sql = string.Format("IF NOT EXISTS"
-               + "(SELECT * FROM sysobjects WHERE id = object_id(N'[dbo].[{0}]')"
-               + "AND OBJECTPROPERTY(id, N'IsUserTable') = 1)"
-               + "CREATE TABLE {0} ("
-               + "ID INTEGER not null, "
-               + "FirmName VARCHAR(50) not null, "
-               + "Straße VARCHAR(50) not null, "
-               + "Ort VARCHAR(50) not null, "
-               + "PRIMARY KEY (ID));", "Firm");
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".cexml";
+            dlg.Filter = "CleanEstimate Datei |*.cexml";
 
-            try
-            {
-                SqlCommand cmd = m_SQLConnection.CreateCommand();
-                cmd.CommandText = sql;
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
-            }
+            bool? result = dlg.ShowDialog();
 
+            if (result.HasValue && result.Value)
+            {
+                using (FileStream fs = new FileStream(dlg.FileName, FileMode.Open, FileAccess.Read))
+                {
+                    try
+                    {
+                        Daten.Objekt tempObjekt = new Daten.Objekt();
+                        tempObjekt.Load(fs);
+
+                        Objekt = new ObjektViewModel();
+                        Objekt.Load(tempObjekt);
+
+                        Leistungen = Objekt.Leistungen;
+
+                        FilePath = dlg.FileName;
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Die CleanEstimate Datei ist fehlerhaft.", "Fehler CleanEstimate Datei!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
         }
 
-        private void ShowFirm()
+        private void Closed()
         {
-            m_sdaFirm = new SqlDataAdapter(@"select * from Firm", m_SQLConnection);
-            new SqlCommandBuilder(m_sdaFirm);
-
-            m_sdaFirm.Fill(m_DataSet, "Firm");
-
-            /*var quary = from f in m_DataSet.Tables["Firm"].AsEnumerable()
-                        select new Daten.FrimData
-                            {
-                                ID = f.Field<int>("ID"),
-                                Name = f.Field<string>("FirmName"),
-                                Straße = f.Field<string>("Straße"),
-                                Ort = f.Field<string>("Ort")
-                            };
-
-
-
-            MyData = new ObservableCollection<Daten.FrimData>(quary);*/
-
-            MyData = m_DataSet.Tables["Firm"].DefaultView;
+            m_MainWindow = null;
         }
 
         #region IViewModel Member
 
-        override public void Load(System.Windows.FrameworkElement element)
+        override public void Load(FrameworkElement element)
         {
             m_MainWindow = element as MainWindow;
 
             Delegates.VoidDelegate del = new Delegates.VoidDelegate(() =>
             {
-                DBConnect();
-
-                ShowFirm();
+                Leistungen = Objekt.Leistungen;
             });
 
             Dispatcher.BeginInvoke(del, null);
         }
 
-        override public void Unload(System.Windows.FrameworkElement element)
+        override public void Unload(FrameworkElement element)
         {
             Closed();
         }
@@ -193,12 +307,15 @@ namespace CleanEstimate.ViewModel
         #endregion
 
         #region IMainWindowViewModel Member
-
-        public void Closed()
+        public void Closed(object sender, EventArgs e)
         {
-            m_MainWindow = null;
+            Closed();
         }
 
+        public void Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
         #endregion
     }
 }

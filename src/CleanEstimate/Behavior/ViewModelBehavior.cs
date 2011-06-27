@@ -52,14 +52,6 @@ namespace CleanEstimate.Behavior
 
             element.DataContextChanged += (sender, e) =>
             {
-                // If the DataContext is being updated from another thread; like if IsAsync is true
-                // on a binding statement, then we could potentially unload the element and unhook
-                // the handler before this event is called because it is dispatched.  So, we always
-                // check to see if the element IsLoaded, if it isn't then we better ignore the 
-                // event and not re-hook the event handler for Invalid.
-                //
-                // We also want to ignore calling Unload if the element was never loaded, because
-                // that would mean it will be called a second time when it finally does load.
                 if (!element.IsLoaded)
                     return;
 
@@ -74,8 +66,6 @@ namespace CleanEstimate.Behavior
 
             element.Loaded += (sender, e) =>
             {
-                // Check to see if the element has already called Loaded, because some WPF 
-                // components can actually call Loaded twice.
                 if (elementLoaded)
                     return;
 
@@ -98,6 +88,28 @@ namespace CleanEstimate.Behavior
                 if (viewModel != null)
                     viewModel.Unload(element);
             };
+
+            Window window = element as Window;
+            if (window != null)
+            {
+                window.Closing += (sender, e) =>
+                    {
+                        IMainWindowViewModel viewModel = window.GetValue(FrameworkElement.DataContextProperty) as IMainWindowViewModel;
+                        if (viewModel != null)
+                        {
+                            viewModel.Closing(sender, e);
+                        }
+                    };
+
+                window.Closed += (sender, e) =>
+                    {
+                        IMainWindowViewModel viewModel = window.GetValue(FrameworkElement.DataContextProperty) as IMainWindowViewModel;
+                        if (viewModel != null)
+                        {
+                            viewModel.Closed(sender, e);
+                        }
+                    };
+            }
         }
 
         #endregion
