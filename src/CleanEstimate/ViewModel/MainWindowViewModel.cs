@@ -39,20 +39,23 @@ namespace CleanEstimate.ViewModel
 
         #endregion //Constructor
 
-        public string FilePath { get { return m_FilePath; } 
+        public string FilePath
+        {
+            get { return m_FilePath; }
             set
-            { 
+            {
                 m_FilePath = value;
                 if (!String.IsNullOrEmpty(value))
                 {
                     DisplayName = "CleanEstimate - " + Path.GetFileName(value);
+                    OnPropertyChanged("EditDisplayName");
                 }
                 else
                 {
                     DisplayName = "CleanEstimate";
                     OnPropertyChanged("EditDisplayName");
                 }
-            } 
+            }
         }
 
         public bool IsEdited { get { return m_IsEdited; } set { m_IsEdited = value; OnPropertyChanged("EditDisplayName"); } }
@@ -104,10 +107,13 @@ namespace CleanEstimate.ViewModel
                 if (m_NewCommand == null)
                     m_NewCommand = new RelayCommand(parm =>
                 {
-                    Objekt = new ObjektViewModel();
-                    Leistungen = Objekt.Leistungen;
-                    FilePath = null;
-                    IsEdited = false;
+                    if (DiscardedChanges())
+                    {
+                        Objekt = new ObjektViewModel();
+                        Leistungen = Objekt.Leistungen;
+                        FilePath = null;
+                        IsEdited = false;
+                    }
                 });
 
                 return m_NewCommand;
@@ -121,8 +127,10 @@ namespace CleanEstimate.ViewModel
                 if (m_LoadCommand == null)
                     m_LoadCommand = new RelayCommand(parm =>
                 {
-                    Load();
-                    IsEdited = false;
+                    if (DiscardedChanges())
+                    {
+                        Load();
+                    }
                 });
 
                 return m_LoadCommand;
@@ -137,7 +145,6 @@ namespace CleanEstimate.ViewModel
                     m_SaveCommand = new RelayCommand(parm =>
                 {
                     Save();
-                    IsEdited = false;
                 });
 
                 return m_SaveCommand;
@@ -152,13 +159,12 @@ namespace CleanEstimate.ViewModel
                     m_SaveAsCommand = new RelayCommand(parm =>
                 {
                     SaveAs();
-                    IsEdited = false;
                 });
 
                 return m_SaveAsCommand;
             }
         }
-      
+
         public ICommand DataGridDoubleClickCommand
         {
             get
@@ -205,6 +211,7 @@ namespace CleanEstimate.ViewModel
         }
 
         #region RequestClose [event]
+        public event EventHandler RequestClosed;
         public event EventHandler RequestClose;
 
         void OnRequestClose()
@@ -214,6 +221,18 @@ namespace CleanEstimate.ViewModel
                 handler(this, EventArgs.Empty);
         }
         #endregion // RequestClose [event]
+
+        private bool DiscardedChanges()
+        {
+            if (IsEdited)
+            {
+                MessageBoxResult result = MessageBox.Show("Änderungen verwerfen?", "Verwerfen?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                return result != MessageBoxResult.No;
+            }
+
+            return true;
+        }
 
         private void Save()
         {
@@ -229,6 +248,8 @@ namespace CleanEstimate.ViewModel
                     Objekt.Save(tempObjekt);
 
                     tempObjekt.Save(fs);
+
+                    IsEdited = false;
                 }
             }
         }
@@ -262,6 +283,8 @@ namespace CleanEstimate.ViewModel
                 {
                     try
                     {
+                        IsEdited = false;
+
                         Daten.Objekt tempObjekt = new Daten.Objekt();
                         tempObjekt.Load(fs);
 
@@ -283,6 +306,10 @@ namespace CleanEstimate.ViewModel
         private void Closed()
         {
             m_MainWindow = null;
+            if (RequestClosed != null)
+            {
+                RequestClosed(this, null);
+            }
         }
 
         #region IViewModel Member
@@ -314,7 +341,10 @@ namespace CleanEstimate.ViewModel
 
         public void Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-
+            if (!DiscardedChanges())
+            {
+                e.Cancel = true;
+            }
         }
         #endregion
     }
