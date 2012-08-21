@@ -319,7 +319,7 @@ namespace CleanEstimate.ViewModel
 
         private void LoadSettings()
         {
-            string directoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CleanEstimate");
+            string directoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "CleanEstimate");
             string filePath = Path.Combine(directoryPath, "CleanEstimate.xml");
 
             if (!Directory.Exists(directoryPath))
@@ -348,7 +348,7 @@ namespace CleanEstimate.ViewModel
 
         private void SaveSettings()
         {
-            string directoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CleanEstimate");
+            string directoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "CleanEstimate");
             string newfilePath = Path.Combine(directoryPath, "CleanEstimate_new.xml");
             string filePath = Path.Combine(directoryPath, "CleanEstimate.xml");
 
