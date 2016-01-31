@@ -1,7 +1,19 @@
 ﻿<Application x:Class="CleanEstimate.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:Utils="clr-namespace:CleanEstimate.Utils"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <Utils:SharedResourceDictionary Source="Icons/Neu.xaml" />
+                <Utils:SharedResourceDictionary Source="Icons/Oeffnen.xaml" />
+                <Utils:SharedResourceDictionary Source="Icons/Speichern.xaml" />
+                <Utils:SharedResourceDictionary Source="Icons/SpeichernUnter.xaml" />
+                <Utils:SharedResourceDictionary Source="Icons/Objekt.xaml" />
+                <Utils:SharedResourceDictionary Source="Icons/Kalkulation.xaml" />
+                <Utils:SharedResourceDictionary Source="Icons/Drucken.xaml" />
+                <Utils:SharedResourceDictionary Source="Icons/DruckenHUebersicht.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

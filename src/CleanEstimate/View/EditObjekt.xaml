@@ -1,0 +1,64 @@
+﻿<Window x:Class="CleanEstimate.View.EditObjekt"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converter="clr-namespace:CleanEstimate.Converter"
+        xmlns:behavior="clr-namespace:CleanEstimate.Behavior"
+        xmlns:local="clr-namespace:CleanEstimate.View"
+        mc:Ignorable="d"
+        Title="Objekt" MinWidth="350" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <converter:BoolInvertConverter x:Key="BoolInvertConverter" />
+    </Window.Resources>
+    <StackPanel Orientation="Vertical">
+        <StackPanel.Resources>
+            <Style TargetType="{x:Type DockPanel}">
+                <Setter Property="Margin" Value="5,5,5,5" />
+                <Setter Property="Height" Value="25" />
+            </Style>
+
+            <Style TargetType="{x:Type TextBlock}" x:Key="Normal">
+                <Setter Property="Margin" Value="0,0,8,0" />
+                <Setter Property="Width" Value="140" />
+                <Setter Property="TextAlignment" Value="Right" />
+            </Style>
+
+            <Style TargetType="{x:Type TextBox}">
+                <Setter Property="behavior:SelectAllTextOnFocusBehavior.SelectAllOnFocus" Value="True" />
+            </Style>
+
+            <Style TargetType="{x:Type CheckBox}">
+                <Setter Property="Margin" Value="10,5,8,5" />
+                <Setter Property="Width" Value="130" />
+                <Setter Property="HorizontalContentAlignment" Value="Right" />
+            </Style>
+        </StackPanel.Resources>
+        <DockPanel FocusManager.FocusedElement="{Binding ElementName=tb_Name}">
+            <TextBlock Text="Objekt:" Style="{StaticResource Normal}"/>
+            <TextBox Name="tb_Name" Text="{Binding Path=Name}" />
+        </DockPanel>
+
+        <DockPanel Height="Auto">
+            <TextBlock Text="Beschreibung:" Style="{StaticResource Normal}"/>
+            <TextBox Text="{Binding Path=Beschreibung}" TextWrapping="Wrap" Height="100" AcceptsReturn="True"/>
+        </DockPanel>
+
+        <DockPanel Height="Auto">
+            <TextBlock Text="Stundenverrechnungssatz:" Style="{StaticResource Normal}"/>
+            <TextBox Text="{Binding Path=Stundenverrechnungssatz}"
+                     behavior:TextBoxMaskBehavior.Mask="Decimal" behavior:TextBoxMaskBehavior.MinimumValue="0" behavior:TextBoxMaskBehavior.MaximumValue="999999"/>
+        </DockPanel>
+
+        <DockPanel Height="Auto">
+            <TextBlock Text="Arbeitstage:" Style="{StaticResource Normal}"/>
+            <TextBox Text="{Binding Path=Arbeistage}"
+                     behavior:TextBoxMaskBehavior.Mask="Decimal" behavior:TextBoxMaskBehavior.MinimumValue="0" behavior:TextBoxMaskBehavior.MaximumValue="999999"/>
+        </DockPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="OK" Click="OK" Width="75" Margin="0,0,5,5" IsDefault="True"/>
+            <Button Content="Schließen" Click="Cancel" Width="75" Margin="5,0,0,5" IsCancel="True"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

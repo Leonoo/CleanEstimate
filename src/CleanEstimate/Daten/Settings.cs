@@ -10,14 +10,19 @@ namespace CleanEstimate.Daten
     [XmlRoot("CleanEstimate_Settings")]
     public class Settings
     {
-        private List<Haeufigkeit> m_Haeufigkeiten = new List<Haeufigkeit>();
-        private List<string> m_Arten = new List<string>();
-        private List<string> m_Methoden = new List<string>();
+        private List<Haeufigkeit> _Haeufigkeiten = new List<Haeufigkeit>();
+        private List<SettingRankValue> _Etage = new List<SettingRankValue>();
+        private List<SettingValue> _Bezeichnung = new List<SettingValue>();
+        private List<SettingValue> _Arten = new List<SettingValue>();
+        private List<SettingValue> _Methoden = new List<SettingValue>();
+        private List<SettingValue> _Einheit = new List<SettingValue>();
 
-
-        public List<Haeufigkeit> Haeufigkeiten { get { return m_Haeufigkeiten; } set { m_Haeufigkeiten = value; } }
-        public List<string> Arten { get { return m_Arten; } set { m_Arten = value; } }
-        public List<string> Methoden { get { return m_Methoden; } set { m_Methoden = value; } }
+        public List<Haeufigkeit> Haeufigkeiten { get { return _Haeufigkeiten; } set { _Haeufigkeiten = value; } }
+        public List<SettingRankValue> Etage { get { return _Etage; } set { _Etage = value; } }
+        public List<SettingValue> Bezeichnung { get { return _Bezeichnung; } set { _Bezeichnung = value; } }
+        public List<SettingValue> Arten { get { return _Arten; } set { _Arten = value; } }
+        public List<SettingValue> Methoden { get { return _Methoden; } set { _Methoden = value; } }
+        public List<SettingValue> Einheit { get { return _Einheit; } set { _Einheit = value; } }
 
         public void Save(Stream stream)
         {
@@ -50,8 +55,11 @@ namespace CleanEstimate.Daten
                 tempSettings = seri.Deserialize(stream) as Settings;
 
                 Haeufigkeiten = tempSettings.Haeufigkeiten;
+                Etage = tempSettings.Etage;
+                Bezeichnung = tempSettings.Bezeichnung;
                 Arten = tempSettings.Arten;
                 Methoden = tempSettings.Methoden;
+                Einheit = tempSettings.Einheit;
             }
             catch (Exception ex)
             {

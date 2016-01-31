@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace CleanEstimate.Behavior
 {
@@ -74,7 +75,9 @@ namespace CleanEstimate.Behavior
             IInputElement element = e.MouseDevice.DirectlyOver;
             if (element != null && element is FrameworkElement)
             {
-                if (((FrameworkElement)element).Parent is DataGridCell)
+                var frameworkElement = (FrameworkElement)element;
+                var visualParent = VisualTreeHelper.GetParent(frameworkElement);
+                if (frameworkElement.Parent is DataGridCell || visualParent is DataGridCell)
                 {
                     ICommand command = (ICommand)(sender as DependencyObject).GetValue(DoubleClickCommandProperty);
 

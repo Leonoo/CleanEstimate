@@ -11,83 +11,19 @@ namespace CleanEstimate.Daten
     public class Objekt
     {
         private List<Leistung> m_Leistungen = new List<Leistung>();
+
         private Decimal m_Arbeistage = 5m;
         private Decimal m_Stundenverrechnungssatz = 15.00m;
 
-        public List<Leistung> Leistungen
-        {
-            get
-            {
-                return m_Leistungen;
-            }
-            set
-            {
-                m_Leistungen = value;
-            }
-        }
+        public List<Leistung> Leistungen { get { return m_Leistungen; } set { m_Leistungen = value; } }
+        [XmlAttribute]
+        public Decimal Arbeistage { get { return m_Arbeistage; } set { m_Arbeistage = value; } }
+        [XmlAttribute]
+        public Decimal Stundenverrechnungssatz { get { return m_Stundenverrechnungssatz; } set { m_Stundenverrechnungssatz = value; } }
 
-        public Decimal Arbeistage
-        {
-            get
-            {
-                return m_Arbeistage;
-            }
-            set
-            {
-                m_Arbeistage = value;
-            }
-        }
-
-        public Decimal Stundenverrechnungssatz
-        {
-            get
-            {
-                return m_Stundenverrechnungssatz;
-            }
-            set
-            {
-                m_Stundenverrechnungssatz = value;
-            }
-        }
-
-        public void Save(Stream stream)
-        {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
-            try
-            {
-                XmlSerializer seri = new XmlSerializer(typeof(Objekt));
-                seri.Serialize(stream, this);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public void Load(Stream stream)
-        {
-            Objekt tempObjekt = null;
-
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
-            try
-            {
-                XmlSerializer seri = new XmlSerializer(typeof(Objekt));
-                tempObjekt = seri.Deserialize(stream) as Objekt;
-
-                Leistungen = tempObjekt.Leistungen;
-                Arbeistage = tempObjekt.Arbeistage;
-                Stundenverrechnungssatz = tempObjekt.Stundenverrechnungssatz;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        [XmlAttribute]
+        public string Name { get; set; }
+        [XmlAttribute]
+        public string Beschreibung { get; set; }
     }
 }

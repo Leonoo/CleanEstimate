@@ -4,38 +4,55 @@
          xmlns:src="clr-namespace:CleanEstimate"
         xmlns:behavior="clr-namespace:CleanEstimate.Behavior"
         xmlns:vm="clr-namespace:CleanEstimate.ViewModel"
-        Title="{Binding Path=EditDisplayName}" Name="Lala" Height="350" Width="525" behavior:ViewModelBehavior.LoadUnload="True" Background="WhiteSmoke">
+        Title="{Binding Path=EditDisplayName}" Name="Self" Height="350" Width="800" behavior:ViewModelBehavior.LoadUnload="True" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Window.Resources>
+        <Style TargetType="{x:Type Viewbox}">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.35" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <DockPanel LastChildFill="True">
+        <DockPanel.InputBindings>
+            <KeyBinding Command="{Binding Path=SaveCommand}"  Key="S" Modifiers="Ctrl"/>
+        </DockPanel.InputBindings>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Datei">
                 <MenuItem Header="_Neu" Command="{Binding Path=NewCommand}"/>
                 <MenuItem Header="_Öffnen" Command="{Binding Path=LoadCommand}"/>
                 <MenuItem Header="_Speichern" Command="{Binding Path=SaveCommand}"/>
-                <MenuItem Header="Speichern _Unter" Command="{Binding Path=SaveAsCommand}"/>
+                <MenuItem Header="Speichern _unter" Command="{Binding Path=SaveAsCommand}"/>
+                <Separator />
+                <MenuItem Header="_Drucken" Command="{Binding Path=NormalPreviewPrintCommand}"/>
+                <MenuItem Header="Drucken Kunde" Command="{Binding Path=KundePreviewPrintCommand}"/>
+                <MenuItem Header="Drucken Mitarbeiter" Command="{Binding Path=MitarbeiterPreviewPrintCommand}"/>
+                <MenuItem Header="Drucken Häufigkeitsübersicht" Command="{Binding Path=HaeufigkeitsuebersichtPreviewPrintCommand}"/>
                 <Separator />
                 <MenuItem Header="_Schließen" Command="{Binding Path=CloseCommand}"/>
             </MenuItem>
+            <MenuItem Header="_Bearbeiten">
+                <MenuItem Header="Firma bearbeiten" Command="{Binding Path=EditFirmCommand}" />
+                <MenuItem Header="Objekt bearbeiten" Command="{Binding Path=EditObjektCommand}" />
+            </MenuItem>
         </Menu>
-        <Grid>
-            <DataGrid Name="dataGrid1" ItemsSource="{Binding Path=Leistungen}" Margin="0,0,0,26" SelectionMode="Extended" SelectionUnit="FullRow" AutoGenerateColumns="False" AlternatingRowBackground="Gainsboro"
-                          behavior:DataGridMouseDoubleClickBehavior.DoubleClickCommand="{Binding Path=DataContext.DataGridDoubleClickCommand, ElementName=Lala}" CanUserSortColumns="False">
-                <DataGrid.Resources>
-                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#B6DAEC"/>
-                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
-
-                    <ContextMenu x:Key="cellContextMenu">
-                        <MenuItem Header="Löschen" Command="{Binding Path=DataContext.TransDeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type src:MainWindow}}}"/>
-                    </ContextMenu>
-
-                    <Style TargetType="{x:Type DataGridCell}">
-                        <Setter Property="ContextMenu" Value="{StaticResource cellContextMenu}" />
-                    </Style>
-                </DataGrid.Resources>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Etage" Binding="{Binding Path=Etage}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Bezeichnung" Binding="{Binding Path=Bezeichnung}" IsReadOnly="True" Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Command="{Binding Path=NewCommand}" Height="60" ToolTip="Neu" Content="{StaticResource IconNeu}" />
+                <Button Command="{Binding Path=LoadCommand}" Height="60" ToolTip="Öffnen" Content="{StaticResource IconOeffnen}"/>
+                <Button Command="{Binding Path=SaveCommand}" Height="60" ToolTip="Speichern" Content="{StaticResource IconSpeichern}"/>
+                <Button Command="{Binding Path=SaveAsCommand}" Height="60" ToolTip="Speichern unter" Content="{StaticResource IconSpeichernUnter}"/>
+            </ToolBar>
+            <ToolBar>
+                <Button Command="{Binding Path=GoToObjekt}" Height="60"  ToolTip="Objekt" Content="{StaticResource IconObjekt}"/>
+                <Button Command="{Binding Path=GoToCalculate}" Height="60"  ToolTip="Kalkulation" Content="{StaticResource IconKalkulation}" />
+            </ToolBar>
+            <ToolBar>
+                <Button Command="{Binding Path=NormalPrintCommand}" Height="60"  ToolTip="Drucken" Content="{StaticResource IconDrucken}"/>
+                <Button Command="{Binding Path=HaeufigkeitUebersichtPrintCommand}" Height="60" ToolTip="Häufigkeitsübersicht" Content="{StaticResource IconDruckenHUebersicht}"/>
+            </ToolBar>
+        </ToolBarTray>
+        <ContentPresenter Content="{Binding Path=Frame}"/>
     </DockPanel>
 </Window>
