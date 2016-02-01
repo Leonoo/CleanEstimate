@@ -53,7 +53,7 @@ namespace CleanEstimate.ViewModel
                 m_FilePath = value;
                 if (!String.IsNullOrEmpty(value))
                 {
-                    DisplayName = "CleanEstimate - " + Path.GetFileName(value);
+                    DisplayName = "CleanEstimate - " + Path.GetFileName(value) + " - " + (Firma != null ? Firma.Name : "");
                 }
                 else
                 {
@@ -385,6 +385,7 @@ namespace CleanEstimate.ViewModel
                         if (leistung != null)
                         {
                             Objekt.Leistungen.Remove(leistung);
+                            Objekt.SVSOderArbeistageGeaendert();
                             IsEdited = true;
                         }
                     });

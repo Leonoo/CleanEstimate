@@ -42,7 +42,6 @@
                 <Button Command="{Binding Path=NewCommand}" Height="60" ToolTip="Neu" Content="{StaticResource IconNeu}" />
                 <Button Command="{Binding Path=LoadCommand}" Height="60" ToolTip="Öffnen" Content="{StaticResource IconOeffnen}"/>
                 <Button Command="{Binding Path=SaveCommand}" Height="60" ToolTip="Speichern" Content="{StaticResource IconSpeichern}"/>
-                <Button Command="{Binding Path=SaveAsCommand}" Height="60" ToolTip="Speichern unter" Content="{StaticResource IconSpeichernUnter}"/>
             </ToolBar>
             <ToolBar>
                 <Button Command="{Binding Path=GoToObjekt}" Height="60"  ToolTip="Objekt" Content="{StaticResource IconObjekt}"/>
