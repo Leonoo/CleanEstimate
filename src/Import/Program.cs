@@ -39,12 +39,14 @@ namespace Import
 
             haeufigDict.Add("2x Mo.", CleanEstimate.Daten.Haeufigkeit.GetHaeufigkeit(Settings.Haeufigkeiten, 20));
             haeufigDict.Add("3x Mo.", CleanEstimate.Daten.Haeufigkeit.GetHaeufigkeit(Settings.Haeufigkeiten, 21));
+            haeufigDict.Add("4x Mo.", CleanEstimate.Daten.Haeufigkeit.GetHaeufigkeit(Settings.Haeufigkeiten, 22));
 
             haeufigDict.Add("Alle 3 Mon.", CleanEstimate.Daten.Haeufigkeit.GetHaeufigkeit(Settings.Haeufigkeiten, 16));
             haeufigDict.Add("Alle 6 Mon.", CleanEstimate.Daten.Haeufigkeit.GetHaeufigkeit(Settings.Haeufigkeiten, 18));
             haeufigDict.Add("1 pro Jahr.", CleanEstimate.Daten.Haeufigkeit.GetHaeufigkeit(Settings.Haeufigkeiten, 19));
             haeufigDict.Add("Alle 2 Mon.", CleanEstimate.Daten.Haeufigkeit.GetHaeufigkeit(Settings.Haeufigkeiten, 15));
             haeufigDict.Add("Alle 2 W.", CleanEstimate.Daten.Haeufigkeit.GetHaeufigkeit(Settings.Haeufigkeiten, 10));
+            haeufigDict.Add("7x Wö.", CleanEstimate.Daten.Haeufigkeit.GetHaeufigkeit(Settings.Haeufigkeiten, 8));
 
             MySqlConnection con = new MySqlConnection("Server=localhost;Database=Kalk;Uid=root;Pwd=starwars;");
             con.Open();
