@@ -27,6 +27,7 @@
                 <Separator />
                 <MenuItem Header="_Drucken" Command="{Binding Path=NormalPreviewPrintCommand}"/>
                 <MenuItem Header="Drucken Kunde" Command="{Binding Path=KundePreviewPrintCommand}"/>
+                <MenuItem Header="Drucken Kunde 2" Command="{Binding Path=Kunde2PreviewPrintCommand}"/>
                 <MenuItem Header="Drucken Mitarbeiter" Command="{Binding Path=MitarbeiterPreviewPrintCommand}"/>
                 <MenuItem Header="Drucken Häufigkeitsübersicht" Command="{Binding Path=HaeufigkeitsuebersichtPreviewPrintCommand}"/>
                 <Separator />

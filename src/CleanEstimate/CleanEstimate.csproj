@@ -256,6 +256,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Report\Haeufigkeitsuebersicht.rdlc" />
+    <EmbeddedResource Include="Report\Kunde2.rdlc" />
     <EmbeddedResource Include="Report\Normal.rdlc" />
     <EmbeddedResource Include="Report\Kunde.rdlc" />
     <EmbeddedResource Include="Report\Mitarbeiter.rdlc" />

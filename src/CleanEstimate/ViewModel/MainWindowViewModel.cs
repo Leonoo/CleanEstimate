@@ -431,6 +431,24 @@ namespace CleanEstimate.ViewModel
             }
         }
 
+        private RelayCommand _Kunde2PreviewPrintCommand;
+        public RelayCommand Kunde2PreviewPrintCommand
+        {
+            get
+            {
+                if (_Kunde2PreviewPrintCommand == null)
+                {
+                    _Kunde2PreviewPrintCommand = new RelayCommand(() =>
+                    {
+                        var report = LoadReport("CleanEstimate.Report.Kunde2.rdlc");
+                        PrintPreview(report);
+                    }, () => Frame is View.LeistungenVIew);
+                }
+
+                return _Kunde2PreviewPrintCommand;
+            }
+        }
+
         private RelayCommand _MitarbeiterPreviewPrintCommand;
         public RelayCommand MitarbeiterPreviewPrintCommand
         {
