@@ -267,6 +267,8 @@ namespace CleanEstimate.ViewModel
 
                         if (result.HasValue && result.Value)
                         {
+                            viewModel.Load(viewModel);
+
                             Objekt.AddLeistung(viewModel);
                             viewModel.Calculate();
                             IsEdited = true;
