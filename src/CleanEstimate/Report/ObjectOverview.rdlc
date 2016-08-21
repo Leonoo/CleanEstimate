@@ -399,7 +399,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Strasse</rd:DefaultName>
-          <Top>1.41012cm</Top>
+          <Top>0.77512cm</Top>
           <Left>0.02097cm</Left>
           <Height>14.5pt</Height>
           <Width>14.5745cm</Width>
@@ -429,41 +429,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Ort</rd:DefaultName>
-          <Top>1.95015cm</Top>
+          <Top>1.31515cm</Top>
           <Left>0.02097cm</Left>
           <Height>14.5pt</Height>
           <Width>14.5745cm</Width>
           <ZIndex>2</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>1pt</PaddingLeft>
-            <PaddingRight>1pt</PaddingRight>
-            <PaddingTop>1pt</PaddingTop>
-            <PaddingBottom>1pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Name1">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>="Objekt: " + First(Fields!Name.Value, "Objekt")</Value>
-                  <Style />
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Name1</rd:DefaultName>
-          <Top>0.88791cm</Top>
-          <Left>0.02097cm</Left>
-          <Height>14.5pt</Height>
-          <Width>14.5745cm</Width>
-          <ZIndex>3</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -495,7 +465,7 @@
           <Left>0.04194cm</Left>
           <Height>14.5pt</Height>
           <Width>14.55353cm</Width>
-          <ZIndex>4</ZIndex>
+          <ZIndex>3</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -527,7 +497,7 @@
           <Left>14.77186cm</Left>
           <Height>14.5pt</Height>
           <Width>3.72814cm</Width>
-          <ZIndex>5</ZIndex>
+          <ZIndex>4</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -546,7 +516,7 @@
           <Left>15.55291cm</Left>
           <Height>2.41896cm</Height>
           <Width>2.94708cm</Width>
-          <ZIndex>6</ZIndex>
+          <ZIndex>5</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
