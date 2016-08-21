@@ -41,6 +41,9 @@ namespace CleanEstimate.ViewModel
         private decimal _GesamtPreis;
         public decimal GesamtPreis { get { return _GesamtPreis; } set { Set(() => GesamtPreis, ref _GesamtPreis, value); } }
 
+        private decimal _GesamtPreisJahr;
+        public decimal GesamtPreisJahr { get { return _GesamtPreisJahr; } set { Set(() => GesamtPreisJahr, ref _GesamtPreisJahr, value); } }
+
         private string _Name = null;
         private string _Beschreibung = null;
         public string Name { get { return _Name; } set { Set(() => Name, ref _Name, value); } }
@@ -140,6 +143,7 @@ namespace CleanEstimate.ViewModel
             }
 
             GesamtPreis = Leistungen.Sum(x => x.Preis);
+            GesamtPreisJahr = GesamtPreis * 12;
             LeistungenView.Refresh();
         }
     }

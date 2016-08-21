@@ -408,7 +408,7 @@ namespace CleanEstimate.ViewModel
                     {
                         var report = LoadReport("CleanEstimate.Report.Normal.rdlc");
                         PrintPreview(report);
-                    },() => Frame is View.LeistungenVIew);
+                    }, () => Frame is View.LeistungenVIew);
                 }
 
                 return _NormalPreviewPrintCommand;
@@ -460,7 +460,7 @@ namespace CleanEstimate.ViewModel
                 {
                     _MitarbeiterPreviewPrintCommand = new RelayCommand(() =>
                     {
-                        var report = LoadReport("CleanEstimate.Report.Mitarbeiter.rdlc");
+                        var report = LoadReport("CleanEstimate.Report.Mitarbeiter2.rdlc");
                         PrintPreview(report);
                     }, () => Frame is View.LeistungenVIew);
                 }
@@ -529,6 +529,24 @@ namespace CleanEstimate.ViewModel
             }
         }
 
+        private RelayCommand _ObjectOverviewPrintCommand;
+        public RelayCommand ObjectOverviewPrintCommand
+        {
+            get
+            {
+                if (_ObjectOverviewPrintCommand == null)
+                {
+                    _ObjectOverviewPrintCommand = new RelayCommand(() =>
+                    {
+                        var report = LoadPrintObjectOverview("CleanEstimate.Report.ObjectOverview.rdlc");
+                        PrintPreview(report);
+                    }, () => Firma != null);
+                }
+
+                return _ObjectOverviewPrintCommand;
+            }
+        }
+
         private void Print(LocalReport report)
         {
             CleanEstimate.Daten.ReportPrintDocument doc = new CleanEstimate.Daten.ReportPrintDocument(report);
@@ -569,6 +587,7 @@ namespace CleanEstimate.ViewModel
                 Stundenverrechnungssatz = Objekt.Stundenverrechnungssatz,
                 Name = Objekt.Name,
                 Beschreibung = Objekt.Beschreibung,
+                GesamtPreisJahr = Objekt.GesamtPreisJahr,
                 AverageHoursDaily = Objekt.Stunden
             };
 
@@ -616,6 +635,36 @@ namespace CleanEstimate.ViewModel
             report.DataSources.Add(reportDataSource3);
 
             report.ReportEmbeddedResource = reportName; //"CleanEstimate.Report.EtageHaeufigkeit.rdlc";
+
+            return report;
+        }
+
+        private LocalReport LoadPrintObjectOverview(string reportName)
+        {
+            Report.Daten.Firma tempFirma = new Report.Daten.Firma() { Name = Firma.Name, Strasse = Firma.Strasse, PLZ = Firma.PLZ, Ort = Firma.Ort, Beschreibung = Firma.Beschreibung };
+            IEnumerable<Report.Daten.Objekt> tempObjekts = Firma.Objekte.OrderBy(x => x.Name).ThenBy(x => x.Beschreibung).ThenBy(x => x.GesamtPreisJahr).Select(x => new Report.Daten.Objekt()
+            {
+                Stundenverrechnungssatz = x.Stundenverrechnungssatz,
+                Name = x.Name,
+                Beschreibung = x.Beschreibung,
+                GesamtPreisJahr = x.GesamtPreisJahr,
+                AverageHoursDaily = x.Stunden
+            });
+
+            LocalReport report = new LocalReport();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+
+            reportDataSource1.Name = "Firma"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Value = new Report.Daten.Firma[1] { tempFirma };
+            report.DataSources.Add(reportDataSource1);
+
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource2 = new Microsoft.Reporting.WinForms.ReportDataSource();
+
+            reportDataSource2.Name = "Objekt"; //Name of the report dataset in our .RDLC file
+            reportDataSource2.Value = tempObjekts.ToArray();
+            report.DataSources.Add(reportDataSource2);
+
+            report.ReportEmbeddedResource = reportName;
 
             return report;
         }

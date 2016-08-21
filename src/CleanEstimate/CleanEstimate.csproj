@@ -26,8 +26,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>4</ApplicationRevision>
-    <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
+    <ApplicationRevision>19</ApplicationRevision>
+    <ApplicationVersion>1.17.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -256,6 +256,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Report\Haeufigkeitsuebersicht.rdlc" />
+    <EmbeddedResource Include="Report\ObjectOverview.rdlc" />
+    <EmbeddedResource Include="Report\Mitarbeiter2.rdlc" />
     <EmbeddedResource Include="Report\Kunde2.rdlc" />
     <EmbeddedResource Include="Report\Normal.rdlc" />
     <EmbeddedResource Include="Report\Kunde.rdlc" />
@@ -293,16 +295,6 @@
     <BootstrapperPackage Include="Microsoft.ReportViewer.12.0">
       <Visible>False</Visible>
       <ProductName>Microsoft Report Viewer 2014 Runtime</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.SqlServer.SQLSysClrTypes.12.0.x64">
-      <Visible>False</Visible>
-      <ProductName>Microsoft®-System-CLR-Typen für SQL Server® 2014 %28x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.SqlServer.SQLSysClrTypes.12.0.x86">
-      <Visible>False</Visible>
-      <ProductName>Microsoft®-System-CLR-Typen für SQL Server® 2014 %28x86%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">

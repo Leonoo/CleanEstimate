@@ -48,7 +48,7 @@ namespace Import
             haeufigDict.Add("Alle 2 W.", CleanEstimate.Daten.Haeufigkeit.GetHaeufigkeit(Settings.Haeufigkeiten, 10));
             haeufigDict.Add("7x Wö.", CleanEstimate.Daten.Haeufigkeit.GetHaeufigkeit(Settings.Haeufigkeiten, 8));
 
-            MySqlConnection con = new MySqlConnection("Server=localhost;Database=Kalk;Uid=root;Pwd=starwars;");
+            MySqlConnection con = new MySqlConnection("Server=10.1.1.10;Database=Kalk;Uid=kalku;Pwd=starwars;");
             con.Open();
 
             MySqlCommand com = new MySqlCommand();

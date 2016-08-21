@@ -10,6 +10,7 @@ namespace CleanEstimate.Report.Daten
     {
         public string Name { get; set; }
         public string Beschreibung { get; set; }
+        public Decimal GesamtPreisJahr { get; set; }
         public Decimal Stundenverrechnungssatz { get; set; }
         public Decimal AverageHoursDaily { get; set; }
     }
