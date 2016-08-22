@@ -68,7 +68,12 @@ namespace CleanEstimate.ViewModel
         public Decimal RichtLeistung
         {
             get { return _RichtLeistung; }
-            set { Set(() => RichtLeistung, ref _RichtLeistung, value); }
+            set { Set(() => RichtLeistung, ref _RichtLeistung, value); RaisePropertyChanged(nameof(RichtLeistungMitFaktor)); }
+        }
+
+        public Decimal RichtLeistungMitFaktor
+        {
+            get { return _RichtLeistung * Objekt.RichtleistungsFaktor; }
         }
 
         public Decimal AnzahlMonatlich
@@ -331,7 +336,7 @@ namespace CleanEstimate.ViewModel
 
                     if (RichtLeistung != 0)
                     {
-                        ZeitMonatlich = AnzahlMonatlich / RichtLeistung;
+                        ZeitMonatlich = AnzahlMonatlich / RichtLeistungMitFaktor;
                         ZeitTaeglich = ZeitMonatlich / Haeufigkeit.Faktor;
 
                         Preis = ZeitMonatlich * Objekt.Stundenverrechnungssatz;

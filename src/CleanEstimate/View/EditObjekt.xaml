@@ -56,6 +56,12 @@
                      behavior:TextBoxMaskBehavior.Mask="Decimal" behavior:TextBoxMaskBehavior.MinimumValue="0" behavior:TextBoxMaskBehavior.MaximumValue="999999"/>
         </DockPanel>
 
+        <DockPanel Height="Auto">
+            <TextBlock Text="Richtleistungsfaktor:" Style="{StaticResource Normal}"/>
+            <TextBox Text="{Binding Path=RichtleistungsFaktor}"
+                     behavior:TextBoxMaskBehavior.Mask="Decimal" behavior:TextBoxMaskBehavior.MinimumValue="0" behavior:TextBoxMaskBehavior.MaximumValue="999999"/>
+        </DockPanel>
+
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="OK" Click="OK" Width="75" Margin="0,0,5,5" IsDefault="True"/>
             <Button Content="Schließen" Click="Cancel" Width="75" Margin="5,0,0,5" IsCancel="True"/>

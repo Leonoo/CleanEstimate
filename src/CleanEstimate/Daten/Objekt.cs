@@ -14,12 +14,15 @@ namespace CleanEstimate.Daten
 
         private Decimal m_Arbeistage = 5m;
         private Decimal m_Stundenverrechnungssatz = 15.00m;
+        private Decimal m_RichtleistungsFaktor = 1m;
 
         public List<Leistung> Leistungen { get { return m_Leistungen; } set { m_Leistungen = value; } }
         [XmlAttribute]
         public Decimal Arbeistage { get { return m_Arbeistage; } set { m_Arbeistage = value; } }
         [XmlAttribute]
         public Decimal Stundenverrechnungssatz { get { return m_Stundenverrechnungssatz; } set { m_Stundenverrechnungssatz = value; } }
+        [XmlAttribute]
+        public Decimal RichtleistungsFaktor { get { return m_RichtleistungsFaktor; } set { m_RichtleistungsFaktor = value; } }
 
         [XmlAttribute]
         public string Name { get; set; }

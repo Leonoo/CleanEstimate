@@ -15,6 +15,7 @@ namespace CleanEstimate.ViewModel
         private ObservableCollection<LeistungObservableObject> _Leistungen = new ObservableCollection<LeistungObservableObject>();
         private Decimal _Arbeistage = 5m;
         private Decimal _Stundenverrechnungssatz = 15.00m;
+        private Decimal m_RichtleistungsFaktor = 1m;
 
         private ListCollectionView _LeistungenView;
         public ListCollectionView LeistungenView
@@ -32,8 +33,9 @@ namespace CleanEstimate.ViewModel
         }
 
         public ObservableCollection<LeistungObservableObject> Leistungen { get { return _Leistungen; } private set { _Leistungen = value; } }
-        public Decimal Arbeistage { get { return _Arbeistage; } set { _Arbeistage = value; SVSOderArbeistageGeaendert(); } }
-        public Decimal Stundenverrechnungssatz { get { return _Stundenverrechnungssatz; } set { _Stundenverrechnungssatz = value; SVSOderArbeistageGeaendert(); } }
+        public Decimal Arbeistage { get { return _Arbeistage; } set { _Arbeistage = value; SVSArbeistageRichtleistungsFaktorGeaendert(); } }
+        public Decimal Stundenverrechnungssatz { get { return _Stundenverrechnungssatz; } set { _Stundenverrechnungssatz = value; SVSArbeistageRichtleistungsFaktorGeaendert(); } }
+        public Decimal RichtleistungsFaktor { get { return m_RichtleistungsFaktor; } set { m_RichtleistungsFaktor = value; SVSArbeistageRichtleistungsFaktorGeaendert(); } }
 
         private decimal _Stunden;
         public decimal Stunden { get { return _Stunden; } set { Set(() => Stunden, ref _Stunden, value); } }
@@ -94,6 +96,7 @@ namespace CleanEstimate.ViewModel
             Name = objekt.Name;
             Beschreibung = objekt.Beschreibung;
             Stundenverrechnungssatz = objekt.Stundenverrechnungssatz;
+            RichtleistungsFaktor = objekt.RichtleistungsFaktor;
 
             foreach (Daten.Leistung item in objekt.Leistungen)
             {
@@ -114,6 +117,7 @@ namespace CleanEstimate.ViewModel
             objekt.Name = Name;
             objekt.Beschreibung = Beschreibung;
             objekt.Stundenverrechnungssatz = Stundenverrechnungssatz;
+            objekt.RichtleistungsFaktor = RichtleistungsFaktor;
 
             foreach (LeistungObservableObject item in Leistungen)
             {
@@ -123,7 +127,7 @@ namespace CleanEstimate.ViewModel
             }
         }
 
-        public void SVSOderArbeistageGeaendert()
+        public void SVSArbeistageRichtleistungsFaktorGeaendert()
         {
             foreach (var item in Leistungen)
             {

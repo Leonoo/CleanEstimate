@@ -99,6 +99,7 @@
                 <DataGridTextColumn Header="Einheit" Binding="{Binding Path=Maenge.Name}" IsReadOnly="True" Width="80" CellStyle="{StaticResource DataGridCellCenter}"/>
                 <DataGridTextColumn Header="Anzahl" Binding="{Binding Path=Anzahl, StringFormat={}{0:F2}}" IsReadOnly="True" Width="80" CellStyle="{StaticResource DataGridCellRight}"/>
                 <DataGridTextColumn Header="Richtleistung" Binding="{Binding Path=RichtLeistung}" IsReadOnly="True" Width="80" CellStyle="{StaticResource DataGridCellRight}"/>
+                <DataGridTextColumn Header="Richtleistung mit Faktor" Binding="{Binding Path=RichtLeistungMitFaktor}" IsReadOnly="True" Width="80" CellStyle="{StaticResource DataGridCellRight}"/>
                 <DataGridTextColumn Header="Häufigkeit"  Binding="{Binding Path=Haeufigkeit.Name}" IsReadOnly="True" Width="100" CellStyle="{StaticResource DataGridCellCenter}"/>
                 <DataGridTextColumn Header="Anzahl Monatlich" Binding="{Binding Path=AnzahlMonatlich, StringFormat={}{0:F2}}" IsReadOnly="True" Width="80" CellStyle="{StaticResource DataGridCellRight}"/>
                 <DataGridTextColumn Header="Ausführ-ungszeit [h]" Binding="{Binding Path=ZeitTaeglich, StringFormat={}{0:F3}}" IsReadOnly="True" Width="80" CellStyle="{StaticResource DataGridCellRight}"/>

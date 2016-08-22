@@ -387,7 +387,7 @@ namespace CleanEstimate.ViewModel
                         if (leistung != null)
                         {
                             Objekt.Leistungen.Remove(leistung);
-                            Objekt.SVSOderArbeistageGeaendert();
+                            Objekt.SVSArbeistageRichtleistungsFaktorGeaendert();
                             IsEdited = true;
                         }
                     });
@@ -564,7 +564,7 @@ namespace CleanEstimate.ViewModel
 
         private void EditObjekt(ObjektObservableObject objekt)
         {
-            var temp = new Daten.Objekt() { Name = objekt.Name, Beschreibung = objekt.Beschreibung, Stundenverrechnungssatz = objekt.Stundenverrechnungssatz, Arbeistage = objekt.Arbeistage };
+            var temp = new Daten.Objekt() { Name = objekt.Name, Beschreibung = objekt.Beschreibung, Stundenverrechnungssatz = objekt.Stundenverrechnungssatz, Arbeistage = objekt.Arbeistage, RichtleistungsFaktor = objekt.RichtleistungsFaktor };
             View.EditObjekt tempEditObjekt = new View.EditObjekt() { DataContext = temp };
 
             bool? result = tempEditObjekt.ShowDialog();
@@ -575,6 +575,7 @@ namespace CleanEstimate.ViewModel
                 objekt.Beschreibung = temp.Beschreibung;
                 objekt.Arbeistage = temp.Arbeistage;
                 objekt.Stundenverrechnungssatz = temp.Stundenverrechnungssatz;
+                objekt.RichtleistungsFaktor = temp.RichtleistungsFaktor;
                 IsEdited = true;
             }
         }
@@ -605,7 +606,7 @@ namespace CleanEstimate.ViewModel
                     Methode = item.Methode.Name,
                     Maenge = item.Maenge.Name,
                     Anzahl = item.Anzahl,
-                    RichtLeistung = item.RichtLeistung,
+                    RichtLeistung = item.RichtLeistungMitFaktor,
                     Haeufigkeit = item.Haeufigkeit != null ? item.Haeufigkeit.ReportName : "",
                     HaeufigkeitFaktor = item.Haeufigkeit != null ? item.Haeufigkeit.Faktor : 0m,
                     AnzahlMonatlich = item.AnzahlMonatlich,
