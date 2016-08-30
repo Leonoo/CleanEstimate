@@ -127,7 +127,7 @@
         <DockPanel IsEnabled="{Binding Path=Fix, Converter={StaticResource BoolInvertConverter}}">
             <TextBlock Text="Richtleistung:" Style="{StaticResource Normal}"/>
             <TextBox Text="{Binding Path=RichtLeistung}"
-                 behavior:TextBoxMaskBehavior.Mask="Integer" behavior:TextBoxMaskBehavior.MinimumValue="0" behavior:TextBoxMaskBehavior.MaximumValue="999999"/>
+                 behavior:TextBoxMaskBehavior.Mask="Decimal" behavior:TextBoxMaskBehavior.MinimumValue="0" behavior:TextBoxMaskBehavior.MaximumValue="999999"/>
         </DockPanel>
 
         <DockPanel IsEnabled="{Binding Path=Fix, Converter={StaticResource BoolInvertConverter}}">

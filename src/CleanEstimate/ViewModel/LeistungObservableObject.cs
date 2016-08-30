@@ -339,7 +339,7 @@ namespace CleanEstimate.ViewModel
                         ZeitMonatlich = AnzahlMonatlich / RichtLeistungMitFaktor;
                         ZeitTaeglich = ZeitMonatlich / Haeufigkeit.Faktor;
 
-                        Preis = ZeitMonatlich * Objekt.Stundenverrechnungssatz;
+                        Preis = decimal.Round(ZeitMonatlich * Objekt.Stundenverrechnungssatz, 2);
                     }
                     else
                     {
