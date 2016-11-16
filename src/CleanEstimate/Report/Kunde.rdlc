@@ -683,7 +683,6 @@
                       </Style>
                     </Textbox>
                     <ColSpan>5</ColSpan>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -796,8 +795,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Name</rd:DefaultName>
-          <Top>1.01424cm</Top>
-          <Left>0.02097cm</Left>
+          <Top>0.98778cm</Top>
           <Height>14.5pt</Height>
           <Width>12cm</Width>
           <Style>
@@ -825,7 +823,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Strasse</rd:DefaultName>
-          <Top>2.08109cm</Top>
+          <Top>1.54134cm</Top>
           <Height>14.5pt</Height>
           <Width>12cm</Width>
           <ZIndex>1</ZIndex>
@@ -854,7 +852,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Ort</rd:DefaultName>
-          <Top>2.62112cm</Top>
+          <Top>2.08137cm</Top>
           <Height>14.5pt</Height>
           <Width>12cm</Width>
           <ZIndex>2</ZIndex>
@@ -883,7 +881,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Name1</rd:DefaultName>
-          <Top>1.55888cm</Top>
+          <Top>2.60701cm</Top>
           <Height>14.5pt</Height>
           <Width>12cm</Width>
           <ZIndex>3</ZIndex>
@@ -915,7 +913,6 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Name</rd:DefaultName>
-          <Left>0.01061cm</Left>
           <Height>26pt</Height>
           <Width>12.04958cm</Width>
           <ZIndex>4</ZIndex>

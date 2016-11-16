@@ -994,7 +994,6 @@
                         <PaddingBottom>1pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1123,6 +1122,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>Leistung</DataSetName>
+        <Left>0cm</Left>
         <Height>1.69332cm</Height>
         <Width>18.5cm</Width>
         <Style>
@@ -1164,96 +1164,8 @@
           </Paragraphs>
           <rd:DefaultName>Name</rd:DefaultName>
           <Top>1.01424cm</Top>
-          <Left>0.02097cm</Left>
           <Height>14.5pt</Height>
           <Width>12cm</Width>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>1pt</PaddingLeft>
-            <PaddingRight>1pt</PaddingRight>
-            <PaddingTop>1pt</PaddingTop>
-            <PaddingBottom>1pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Strasse">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=First(Fields!Strasse.Value, "Firma")</Value>
-                  <Style />
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Strasse</rd:DefaultName>
-          <Top>2.08109cm</Top>
-          <Height>14.5pt</Height>
-          <Width>12cm</Width>
-          <ZIndex>1</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>1pt</PaddingLeft>
-            <PaddingRight>1pt</PaddingRight>
-            <PaddingTop>1pt</PaddingTop>
-            <PaddingBottom>1pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Ort">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=First(Fields!PLZ.Value, "Firma") + " "+ First(Fields!Ort.Value, "Firma")</Value>
-                  <Style />
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Ort</rd:DefaultName>
-          <Top>2.62112cm</Top>
-          <Height>14.5pt</Height>
-          <Width>12cm</Width>
-          <ZIndex>2</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>1pt</PaddingLeft>
-            <PaddingRight>1pt</PaddingRight>
-            <PaddingTop>1pt</PaddingTop>
-            <PaddingBottom>1pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Name1">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>="Objekt: " + First(Fields!Name.Value, "Objekt")</Value>
-                  <Style />
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Name1</rd:DefaultName>
-          <Top>1.55888cm</Top>
-          <Height>14.5pt</Height>
-          <Width>12cm</Width>
-          <ZIndex>3</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1285,7 +1197,7 @@
           <Left>12.07056cm</Left>
           <Height>14.5pt</Height>
           <Width>6.42944cm</Width>
-          <ZIndex>4</ZIndex>
+          <ZIndex>1</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1314,10 +1226,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Name</rd:DefaultName>
-          <Left>0.01061cm</Left>
+          <Left>0cm</Left>
           <Height>26pt</Height>
           <Width>12.04958cm</Width>
-          <ZIndex>5</ZIndex>
+          <ZIndex>2</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1349,7 +1261,7 @@
           <Left>12.07056cm</Left>
           <Height>14.5pt</Height>
           <Width>6.42944cm</Width>
-          <ZIndex>6</ZIndex>
+          <ZIndex>3</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1381,6 +1293,96 @@
           <Left>12.07056cm</Left>
           <Height>14.5pt</Height>
           <Width>6.42944cm</Width>
+          <ZIndex>4</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>1pt</PaddingLeft>
+            <PaddingRight>1pt</PaddingRight>
+            <PaddingTop>1pt</PaddingTop>
+            <PaddingBottom>1pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Strasse">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=First(Fields!Strasse.Value, "Firma")</Value>
+                  <Style />
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Strasse</rd:DefaultName>
+          <Top>1.62483cm</Top>
+          <Left>0cm</Left>
+          <Height>14.5pt</Height>
+          <Width>12cm</Width>
+          <ZIndex>5</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>1pt</PaddingLeft>
+            <PaddingRight>1pt</PaddingRight>
+            <PaddingTop>1pt</PaddingTop>
+            <PaddingBottom>1pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Ort">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=First(Fields!PLZ.Value, "Firma") + " "+ First(Fields!Ort.Value, "Firma")</Value>
+                  <Style />
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Ort</rd:DefaultName>
+          <Top>2.13635cm</Top>
+          <Left>0cm</Left>
+          <Height>14.5pt</Height>
+          <Width>12cm</Width>
+          <ZIndex>6</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>1pt</PaddingLeft>
+            <PaddingRight>1pt</PaddingRight>
+            <PaddingTop>1pt</PaddingTop>
+            <PaddingBottom>1pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Name1">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>="Objekt: " + First(Fields!Name.Value, "Objekt")</Value>
+                  <Style />
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Name1</rd:DefaultName>
+          <Top>2.66199cm</Top>
+          <Left>0cm</Left>
+          <Height>14.5pt</Height>
+          <Width>12cm</Width>
           <ZIndex>7</ZIndex>
           <Style>
             <Border>
